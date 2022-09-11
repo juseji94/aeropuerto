@@ -24,8 +24,13 @@ SECRET_KEY = 'django-insecure-2#@(l^pyr%kq-46*+%imv2v*xm)@+b=1%57z&zv#187h%6@k&1
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+AUTH_USER_MODEL='aeropuerto_app.Usuario'
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_METHODS = ['GET','OPTIONS','PATCH','POST','PUT', 'DELETE',]
+CORS_ALLOW_CREDENTIALS = True
 
 
 # Application definition
@@ -38,6 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'aeropuerto_app.apps.AeropuertoAppConfig',
     'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
+
 ]
 
 MIDDLEWARE = [
@@ -48,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'aeropuerto.urls'
@@ -123,3 +132,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],
+    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.TokenAuthentication'],
+}
